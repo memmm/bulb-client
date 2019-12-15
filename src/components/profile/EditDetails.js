@@ -50,14 +50,9 @@ class EditDetails extends Component {
     this.handleClose();
   };
   render() {
-    const { classes } = this.props;
     return (
       <Fragment>
-        <Button
-          tip="Edit Details"
-          onClick={this.handleOpen}
-          btnClassName={classes.button}
-        ></Button>
+        <Button tip="Edit Details" onClick={this.handleOpen}></Button>
         <Modal.Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -74,7 +69,6 @@ class EditDetails extends Component {
                 multiline
                 rows="3"
                 placeholder="A short bio about yourself"
-                className={classes.textField}
                 value={this.state.bio}
                 onChange={this.handleChange}
                 fullWidth
@@ -84,7 +78,6 @@ class EditDetails extends Component {
                 tpye="text"
                 label="Website"
                 placeholder="Your personal/professinal website"
-                className={classes.textField}
                 value={this.state.website}
                 onChange={this.handleChange}
                 fullWidth
@@ -94,7 +87,6 @@ class EditDetails extends Component {
                 tpye="text"
                 label="Location"
                 placeholder="Where you live"
-                className={classes.textField}
                 value={this.state.location}
                 onChange={this.handleChange}
                 fullWidth
@@ -116,8 +108,7 @@ class EditDetails extends Component {
 }
 
 EditDetails.propTypes = {
-  editUserDetails: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired
+  editUserDetails: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

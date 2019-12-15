@@ -37,8 +37,8 @@ class Profile extends Component {
 
     let profileMarkup = !loading ? (
       authenticated ? (
-        <Card className={classes.paper}>
-          <div className={classes.profile}>
+        <Card>
+          <div>
             <div className="image-wrapper">
               <img src={imageUrl} alt="profile" className="profile-image" />
               <input
@@ -83,9 +83,9 @@ class Profile extends Component {
           </div>
         </Card>
       ) : (
-        <Card className={classes.paper}>
+        <Card>
           <p>No profile found, please login again</p>
-          <div className={classes.buttons}>
+          <div>
             <Button
               variant="contained"
               color="primary"

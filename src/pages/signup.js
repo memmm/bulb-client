@@ -6,7 +6,9 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 
-import axios from "axios";
+// Redux stuff
+import { connect } from "react-redux";
+import { signupUser } from "../redux/actions/userActions";
 
 export class signup extends Component {
   constructor() {
@@ -16,15 +18,14 @@ export class signup extends Component {
       password: "",
       confirmPassword: "",
       handle: "",
-      loading: false,
       errors: {}
     };
   }
-  handleChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({ errors: nextProps.UI.errors });
+    }
+  }
 
   handleSubmit = event => {
     event.preventDefault();
@@ -37,32 +38,28 @@ export class signup extends Component {
       confirmPassword: this.state.confirmPassword,
       handle: this.state.handle
     };
-    axios
-      .post("/signup", newUserData)
-      .then(res => {
-        console.log(res.data);
-        localStorage.setItem("FBIdToken", `Bearer ${res.data.token}`);
-        this.setState({
-          loading: false
-        });
-        this.props.history.push("/");
-      })
-      .catch(err => {
-        this.setState({
-          errors: err.response.data,
-          loading: false
-        });
-      });
+    this.props.signupUser(newUserData, this.props.history);
+  };
+  handleChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
   };
   render() {
-    const { errors, loading } = this.state;
+    const {
+      UI: { loading }
+    } = this.props;
+    const { errors } = this.state;
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Group>
           <Form.Label>Email address</Form.Label>
           <Form.Control
+            id="email"
             type="email"
             name="email"
+            error={errors.email ? true : false}
+            value={this.state.email}
             placeholder="Enter email"
             onChange={this.handleChange}
           />
@@ -70,8 +67,11 @@ export class signup extends Component {
         <Form.Group>
           <Form.Label>Username</Form.Label>
           <Form.Control
+            id="handle"
             type="text"
             name="handle"
+            error={errors.handle ? true : false}
+            value={this.state.handle}
             placeholder="Username"
             onChange={this.handleChange}
           />
@@ -79,9 +79,12 @@ export class signup extends Component {
         <Form.Group>
           <Form.Label>Password</Form.Label>
           <Form.Control
+            id="password"
             type="password"
             name="password"
             placeholder="Password"
+            error={errors.password ? true : false}
+            value={this.state.password}
             onChange={this.handleChange}
           />
         </Form.Group>
@@ -89,6 +92,7 @@ export class signup extends Component {
         <Form.Group>
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
+            id="confirmPassword"
             type="password"
             name="confirmPassword"
             placeholder="Password"
@@ -100,7 +104,7 @@ export class signup extends Component {
           <Form.Text className="text-muted">{errors.general}</Form.Text>
         )}
 
-        <Form.Group controlId="formBasicCheckbox">
+        <Form.Group>
           <Form.Check type="checkbox" label="Keep me logged in (TODO)" />
         </Form.Group>
 
@@ -124,4 +128,15 @@ export class signup extends Component {
   }
 }
 
-export default signup;
+signup.propTypes = {
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
+  signupUser: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  user: state.user,
+  UI: state.UI
+});
+
+export default connect(mapStateToProps, { signupUser })(signup);

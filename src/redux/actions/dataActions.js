@@ -15,10 +15,10 @@ import {
 import axios from "axios";
 
 // Get all POSTs
-export const getPOSTs = () => dispatch => {
+export const getPosts = () => dispatch => {
   dispatch({ type: LOADING_DATA });
   axios
-    .get("/POSTs")
+    .get("/posts")
     .then(res => {
       dispatch({
         type: SET_POSTS,
@@ -32,10 +32,10 @@ export const getPOSTs = () => dispatch => {
       });
     });
 };
-export const getPOST = postId => dispatch => {
+export const getPost = postId => dispatch => {
   dispatch({ type: LOADING_UI });
   axios
-    .get(`/POST/${postId}`)
+    .get(`/post/${postId}`)
     .then(res => {
       dispatch({
         type: SET_POST,
@@ -46,10 +46,10 @@ export const getPOST = postId => dispatch => {
     .catch(err => console.log(err));
 };
 // Post a POST
-export const postPOST = newPOST => dispatch => {
+export const postPost = newPost => dispatch => {
   dispatch({ type: LOADING_UI });
   axios
-    .post("/POST", newPOST)
+    .post("/post", newPost)
     .then(res => {
       dispatch({
         type: POST_POST,
@@ -65,9 +65,9 @@ export const postPOST = newPOST => dispatch => {
     });
 };
 // Like a POST
-export const likePOST = postId => dispatch => {
+export const likePost = postId => dispatch => {
   axios
-    .get(`/POST/${postId}/like`)
+    .get(`/post/${postId}/like`)
     .then(res => {
       dispatch({
         type: LIKE_POST,
@@ -77,9 +77,9 @@ export const likePOST = postId => dispatch => {
     .catch(err => console.log(err));
 };
 // Unlike a POST
-export const unlikePOST = postId => dispatch => {
+export const unlikePost = postId => dispatch => {
   axios
-    .get(`/POST/${postId}/unlike`)
+    .get(`/post/${postId}/unlike`)
     .then(res => {
       dispatch({
         type: UNLIKE_POST,
@@ -91,7 +91,7 @@ export const unlikePOST = postId => dispatch => {
 // Submit a comment
 export const submitComment = (postId, commentData) => dispatch => {
   axios
-    .post(`/POST/${postId}/comment`, commentData)
+    .post(`/post/${postId}/comment`, commentData)
     .then(res => {
       dispatch({
         type: SUBMIT_COMMENT,
@@ -106,9 +106,9 @@ export const submitComment = (postId, commentData) => dispatch => {
       });
     });
 };
-export const deletePOST = postId => dispatch => {
+export const deletePost = postId => dispatch => {
   axios
-    .delete(`/POST/${postId}`)
+    .delete(`/post/${postId}`)
     .then(() => {
       dispatch({ type: DELETE_POST, payload: postId });
     })

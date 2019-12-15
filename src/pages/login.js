@@ -6,7 +6,9 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 
-import axios from "axios";
+// Redux stuff
+import { connect } from "react-redux";
+import { loginUser } from "../redux/actions/userActions";
 
 export class login extends Component {
   constructor() {
@@ -18,6 +20,11 @@ export class login extends Component {
       errors: {}
     };
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({ errors: nextProps.UI.errors });
+    }
+  }
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
@@ -26,50 +33,42 @@ export class login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.setState({
-      loading: true
-    });
+
     const userData = {
       email: this.state.email,
       password: this.state.password
     };
-    axios
-      .post("/login", userData)
-      .then(res => {
-        console.log(res.data);
-        localStorage.setItem("FBIdToken", `Bearer ${res.data.token}`);
-        this.setState({
-          loading: false
-        });
-        this.props.history.push("/");
-      })
-      .catch(err => {
-        this.setState({
-          errors: err.response.data,
-          loading: false
-        });
-      });
+    this.props.loginUser(userData, this.props.history);
   };
   render() {
-    const { errors, loading } = this.state;
+    const {
+      UI: { loading }
+    } = this.props;
+    const { errors } = this.state;
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Group controlId="formBasicEmail">
+      <Form className="w-50" onSubmit={this.handleSubmit}>
+        <Form.Group>
           <Form.Label>Email address</Form.Label>
           <Form.Control
+            id="email"
             type="email"
             name="email"
+            error={errors.email ? true : false}
+            value={this.state.email}
             placeholder="Enter email"
             onChange={this.handleChange}
           />
         </Form.Group>
 
-        <Form.Group controlId="formBasicPassword">
+        <Form.Group>
           <Form.Label>Password</Form.Label>
           <Form.Control
+            id="password"
             type="password"
             name="password"
             placeholder="Password"
+            error={errors.password ? true : false}
+            value={this.state.password}
             onChange={this.handleChange}
           />
         </Form.Group>
@@ -78,7 +77,7 @@ export class login extends Component {
           <Form.Text className="text-muted">{errors.general}</Form.Text>
         )}
 
-        <Form.Group controlId="formBasicCheckbox">
+        <Form.Group>
           <Form.Check type="checkbox" label="Keep me logged in (TODO)" />
         </Form.Group>
 
@@ -102,4 +101,19 @@ export class login extends Component {
   }
 }
 
-export default login;
+login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  user: state.user,
+  UI: state.UI
+});
+
+const mapActionsToProps = {
+  loginUser
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(login);

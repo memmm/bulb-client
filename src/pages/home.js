@@ -1,36 +1,40 @@
 import React, { Component } from "react";
-import axios from "axios";
-import Post from "../components/post/Post";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+import Post from "../components/post/Post";
+import Profile from "../components/profile/Profile";
+import PostSkeleton from "../util/PostSkeleton";
+
+import { connect } from "react-redux";
+import { getPosts } from "../redux/actions/dataActions";
+
 export class home extends Component {
-  state = {
-    posts: null
-  };
   componentDidMount() {
-    axios.get("/posts").then(res => {
-      this.setState({
-        posts: res.data
-      });
-    });
+    this.props.getPosts();
   }
   render() {
-    let recentPostsMarkup = this.state.posts ? (
-      this.state.posts.map(post => <Post key={post.postId} post={post}></Post>)
+    const { posts, loading } = this.props.data;
+    let recentPostsMarkup = !loading ? (
+      posts.map(post => <Post key={post.postId} post={post}></Post>)
     ) : (
-      <p>Loading...</p>
+      <PostSkeleton />
     );
     return (
       <Container>
         <Row>
           <Col>{recentPostsMarkup}</Col>
-          <Col>Profile...</Col>
+          <Col>
+            <Profile />
+          </Col>
         </Row>
       </Container>
     );
   }
 }
+const mapStateToProps = state => ({
+  data: state.data
+});
 
-export default home;
+export default connect(mapStateToProps, { getPosts })(home);

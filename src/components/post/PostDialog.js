@@ -31,14 +31,10 @@ class PostDialog extends Component {
   }
   handleOpen = () => {
     let oldPath = window.location.pathname;
-
     const { userHandle, postId } = this.props;
     const newPath = `/users/${userHandle}/post/${postId}`;
-
     if (oldPath === newPath) oldPath = `/users/${userHandle}`;
-
     window.history.pushState(null, null, newPath);
-
     this.setState({ open: true, oldPath, newPath });
     this.props.getPost(this.props.postId);
   };
@@ -50,7 +46,6 @@ class PostDialog extends Component {
 
   render() {
     const {
-      classes,
       post: {
         postId,
         body,
@@ -78,27 +73,23 @@ class PostDialog extends Component {
       <Container>
         <Row>
           <Col item sm={5}>
-            <img
-              src={userImage}
-              alt="Profile"
-              className={classes.profileImage}
-            />
+            <img src={userImage} alt="Profile" />
           </Col>
           <Col item sm={7}>
             <Link to={`/users/${userHandle}`}>
               <h5>@{userHandle}</h5>
             </Link>
 
-            <hr className={classes.invisibleSeparator} />
+            <hr />
             <p>{dayjs(createdAt).format("h:mm a, MMMM DD YYYY")}</p>
-            <hr className={classes.invisibleSeparator} />
+            <hr />
             <p>{body} </p>
             <LikeButton postId={postId} />
             <span>{likeCount} likes</span>
             <Button tip="comments"></Button>
             <span>{commentCount} comments</span>
           </Col>
-          <hr className={classes.visibleSeparator} />
+          <hr />
           <CommentForm postId={postId} />
           <Comments comments={comments} />
         </Row>
@@ -106,23 +97,10 @@ class PostDialog extends Component {
     );
     return (
       <Fragment>
-        <Button
-          onClick={this.handleOpen}
-          tip="Expand post"
-          tipClassName={classes.expandButton}
-        ></Button>
-        <Modal.Dialog>
-          open={this.state.open}
-          onClose={this.handleClose}
-          fullWidth maxWidth="sm" >
-          <Button
-            tip="Close"
-            onClick={this.handleClose}
-            tipClassName={classes.closeButton}
-          ></Button>
-          <Modal.Body className={classes.dialogContent}>
-            {dialogMarkup}
-          </Modal.Body>
+        <Button onClick={this.handleOpen} tip="Expand post"></Button>
+        <Modal.Dialog open={this.state.open} onClose={this.handleClose}>
+          <Button tip="Close" onClick={this.handleClose}></Button>
+          <Modal.Body>{dialogMarkup}</Modal.Body>
         </Modal.Dialog>
       </Fragment>
     );

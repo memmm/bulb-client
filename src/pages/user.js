@@ -5,7 +5,6 @@ import Post from "../components/post/Post";
 import StaticProfile from "../components/profile/StaticProfile";
 
 // Bootstrap
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 

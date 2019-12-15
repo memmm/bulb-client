@@ -13,8 +13,8 @@ const StaticProfile = props => {
   } = props;
 
   return (
-    <Card className={classes.paper}>
-      <div className={classes.profile}>
+    <Card>
+      <div>
         <div className="image-wrapper">
           <img src={imageUrl} alt="profile" className="profile-image" />
         </div>
