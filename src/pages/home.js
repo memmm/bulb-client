@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Post from "../components/Post";
+import Post from "../components/post/Post";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
