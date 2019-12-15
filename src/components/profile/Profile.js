@@ -40,7 +40,11 @@ class Profile extends Component {
         <Card>
           <div>
             <div className="image-wrapper">
-              <img src={imageUrl} alt="profile" className="profile-image" />
+              <img
+                src={imageUrl}
+                alt="profile"
+                className="profile-image w-100"
+              />
               <input
                 type="file"
                 id="imageInput"
@@ -50,7 +54,6 @@ class Profile extends Component {
               <Button
                 tip="Edit profile picture"
                 onClick={this.handleEditPicture}
-                btnClassName="button"
               ></Button>
             </div>
             <hr />
@@ -78,7 +81,9 @@ class Profile extends Component {
               )}{" "}
               <span>Joined {dayjs(createdAt).format("MMM YYYY")}</span>
             </div>
-            <Button tip="Logout" onClick={this.handleLogout}></Button>
+            <Button tip="Logout" onClick={this.handleLogout}>
+              Logout
+            </Button>
             <EditDetails />
           </div>
         </Card>

@@ -54,11 +54,11 @@ class user extends Component {
     );
 
     return (
-      <Row spacing={16}>
-        <Col item sm={8} xs={12}>
+      <Row>
+        <Col item sm={6} xs={12}>
           {postsMarkup}
         </Col>
-        <Col item sm={4} xs={12}>
+        <Col item sm={5} xs={12}>
           {this.state.profile === null ? (
             <ProfileSkeleton />
           ) : (

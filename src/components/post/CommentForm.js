@@ -47,10 +47,8 @@ class CommentForm extends Component {
             type="text"
             label="Comment on post"
             error={errors.comment ? true : false}
-            helperText={errors.comment}
             value={this.state.body}
             onChange={this.handleChange}
-            fullWidth
           />
           <Button type="submit" variant="contained" color="primary">
             Submit

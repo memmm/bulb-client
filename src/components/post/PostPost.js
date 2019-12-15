@@ -51,12 +51,7 @@ class PostPost extends Component {
         <Button onClick={this.handleOpen} tip="Post a Post!">
           +
         </Button>
-        <Modal.Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          fullWidth
-          maxWidth="sm"
-        >
+        <Modal.Dialog open={this.state.open} onClose={this.handleClose}>
           <Button
             tip="Close"
             onClick={this.handleClose}
@@ -65,18 +60,15 @@ class PostPost extends Component {
           <Modal.Title>Post a new post</Modal.Title>
           <Modal.Body>
             <Form onSubmit={this.handleSubmit}>
-              <TextField
+              <Form.Label>Post</Form.Label>
+              <Form.Control
                 name="body"
                 type="text"
-                label="POST!!"
-                multiline
                 rows="3"
                 placeholder="Post at your fellow apes"
                 error={errors.body ? true : false}
-                helperText={errors.body}
                 className={classes.textField}
                 onChange={this.handleChange}
-                fullWidth
               />
               <Button
                 type="submit"

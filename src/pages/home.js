@@ -24,8 +24,10 @@ export class home extends Component {
     return (
       <Container>
         <Row>
-          <Col>{recentPostsMarkup}</Col>
-          <Col>
+          <Col sm={12} md={6}>
+            {recentPostsMarkup}
+          </Col>
+          <Col sm={12} md={6}>
             <Profile />
           </Col>
         </Row>

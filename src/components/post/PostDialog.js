@@ -25,18 +25,19 @@ class PostDialog extends Component {
     newPath: ""
   };
   componentDidMount() {
+    // this.props.getPost(this.props.post.postId);
     if (this.props.openDialog) {
       this.handleOpen();
     }
   }
   handleOpen = () => {
     let oldPath = window.location.pathname;
-    const { userHandle, postId } = this.props;
+    const { userHandle, postId } = this.props.post;
     const newPath = `/users/${userHandle}/post/${postId}`;
     if (oldPath === newPath) oldPath = `/users/${userHandle}`;
     window.history.pushState(null, null, newPath);
     this.setState({ open: true, oldPath, newPath });
-    this.props.getPost(this.props.postId);
+    this.props.getPost(this.props.post.postId);
   };
   handleClose = () => {
     window.history.pushState(null, null, this.state.oldPath);
@@ -46,6 +47,7 @@ class PostDialog extends Component {
 
   render() {
     const {
+      UI: { loading },
       post: {
         postId,
         body,
@@ -55,8 +57,7 @@ class PostDialog extends Component {
         userImage,
         userHandle,
         comments
-      },
-      UI: { loading }
+      }
     } = this.props;
 
     const dialogMarkup = loading ? (
@@ -91,7 +92,7 @@ class PostDialog extends Component {
           </Col>
           <hr />
           <CommentForm postId={postId} />
-          <Comments comments={comments} />
+          {/* <Comments comments={comments} /> */}
         </Row>
       </Container>
     );
@@ -117,13 +118,8 @@ PostDialog.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  post: state.data.post,
+  post: state.data,
   UI: state.UI
 });
 
-const mapActionsToProps = {
-  getPost,
-  clearErrors
-};
-
-export default connect(mapStateToProps, mapActionsToProps)(PostDialog);
+export default connect(mapStateToProps, { getPost, clearErrors })(PostDialog);

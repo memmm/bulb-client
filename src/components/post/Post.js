@@ -54,11 +54,11 @@ class Post extends Component {
           <Card.Link href="#">{likeCount}</Card.Link>
           <Button variant="primary">Comments</Button>
           <Card.Link href="#">{commentCount}</Card.Link>
-          {/* <PostDialog
+          <PostDialog
             postId={postId}
             userHandle={userHandle}
             openDialog={this.props.openDialog}
-          /> */}
+          />
         </Card.Footer>
       </Card>
     );

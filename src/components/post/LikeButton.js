@@ -36,13 +36,6 @@ export class LikeButton extends Component {
   }
 }
 
-LikeButton.propTypes = {
-  user: PropTypes.object.isRequired,
-  postId: PropTypes.string.isRequired,
-  likePost: PropTypes.func.isRequired,
-  unlikePost: PropTypes.func.isRequired
-};
-
 const mapStateToProps = state => ({
   user: state.user
 });

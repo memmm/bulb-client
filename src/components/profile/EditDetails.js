@@ -52,13 +52,10 @@ class EditDetails extends Component {
   render() {
     return (
       <Fragment>
-        <Button tip="Edit Details" onClick={this.handleOpen}></Button>
-        <Modal.Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          fullWidth
-          maxWidth="sm"
-        >
+        <Button tip="Edit Details" onClick={this.handleOpen}>
+          Edit details
+        </Button>
+        <Modal.Dialog open={this.state.open} onClose={this.handleClose}>
           <Modal.Title>Edit your details</Modal.Title>
           <Modal.Body>
             <Form>
@@ -66,12 +63,10 @@ class EditDetails extends Component {
                 name="bio"
                 tpye="text"
                 label="Bio"
-                multiline
                 rows="3"
                 placeholder="A short bio about yourself"
                 value={this.state.bio}
                 onChange={this.handleChange}
-                fullWidth
               />
               <Form.Control
                 name="website"
@@ -80,7 +75,6 @@ class EditDetails extends Component {
                 placeholder="Your personal/professinal website"
                 value={this.state.website}
                 onChange={this.handleChange}
-                fullWidth
               />
               <Form.Control
                 name="location"
@@ -89,7 +83,6 @@ class EditDetails extends Component {
                 placeholder="Where you live"
                 value={this.state.location}
                 onChange={this.handleChange}
-                fullWidth
               />
             </Form>
           </Modal.Body>

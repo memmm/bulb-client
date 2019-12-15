@@ -27,17 +27,8 @@ class DeletePost extends Component {
 
     return (
       <Fragment>
-        <Button
-          tip="Delete Post"
-          onClick={this.handleOpen}
-          btnClassName={classes.deleteButton}
-        ></Button>
-        <Modal.Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          fullWidth
-          maxWidth="sm"
-        >
+        <Button onClick={this.handleOpen}>Delete Post</Button>
+        <Modal.Dialog open={this.state.open} onClose={this.handleClose}>
           <Modal.Title>Are you sure you want to delete this post ?</Modal.Title>
           <Modal.Footer>
             <Button onClick={this.handleClose} color="primary">
